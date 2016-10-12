@@ -1,18 +1,10 @@
-// Imported request from npn request package installed in the terminal and stored in the variable
+// Imported request from npm request package installed in the terminal and stored in the variable
 var request = require('request');
 var key = require('./keys.js');
 var arg1 = process.argv[2];
 var arg2 = process.argv[3];
 
 var movieName ="";
-
-for(var i=2; i<arg1.length; i++){
-  if( i>2 && i<arg1.length){
-    movieName = movieName + '+' +arg1[i];
-  }else{
-    movieName = movieName + arg1[i];
-  }
-}
 
 function omdbRequest(movieName){
   var queryUrl = 'http://www.omdbapi.com/?t=' + movieName +'&plot=short&tomatoes=true&r=json';
@@ -34,20 +26,20 @@ function omdbRequest(movieName){
     }
   });
 }
-
 switch(arg1){
   case "movie-this":
     omdbRequest(arg2);
     break;
   case "my-tweets":
-    getMyTweets()
+    getMyTweets();
     break;
   case "spotify-this-song":
-    getMySong()
+    getMySong(arg2);
     break;
   case "do-what-it-says":
     doIt()
     break;
+
 } 
 function doIt(){
 var fs = require('fs');
@@ -61,22 +53,27 @@ fs.readFile("random.txt", "utf8", function(err,data){
     // Print each element (item) of the array/ 
      console.log(output[i]);
   }
-
 });
 }
-function getMySong(arg2){
+function getMySong(){
+   key = require('./keys.js');
   var SpotifyWebApi = require('spotify-web-api-node');
   var spotifyCreds = key.spotifyKeys;
+   console.log(spotifyCreds);
+   console.log(arg2);
   var spotifyApi = new SpotifyWebApi(spotifyCreds);
-      spotifyApi.searchTracks(arg2)
-      .then(function(data) { 
-        console.log('Artists Name: '+ JSON.stringify(data.tracks.items[0].artist[0].name, null, 2));
-       },function(err) {
-          console.error(err);
-
-     });
-  }
-
+      spotifyApi.searchTracks(arg2,function(err,data){
+      
+        if(err){
+       
+          console.error('Something went wrong',err.message);
+        }
+        else{
+          console.log('Artists Name: '+ JSON.stringify(data, null, 2));
+        }
+        });
+     }
+  
 function getMyTweets(){
   var twitterCreds = key.twitterKeys;
 // console.log(twitterCreds);
