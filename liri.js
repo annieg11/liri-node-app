@@ -24,6 +24,11 @@ function omdbRequest(movieName){
       console.log("Rotten Tomatoes Rating.  : " + JSON.parse(body)["tomatoRating"]+("."));
       console.log(" Rotten Tomatoes URL : " + JSON.parse(body)["Website"]+("."));
     }
+    if(movieName == null){
+      console.log(' Watch Mr.Nobody.');
+      console.log('If you '+'have not' + ' watched' + " Mr. Nobody," + 'then you should!');
+      console.log('Its on Netflix!'); 
+    }
   });
 }
 switch(arg1){
@@ -59,20 +64,23 @@ function getMySong(){
    key = require('./keys.js');
   var SpotifyWebApi = require('spotify-web-api-node');
   var spotifyCreds = key.spotifyKeys;
-   console.log(spotifyCreds);
-   console.log(arg2);
+   // console.log(spotifyCreds);
+   // console.log(arg2);
   var spotifyApi = new SpotifyWebApi(spotifyCreds);
-      spotifyApi.searchTracks(arg2,function(err,data){
-      
-        if(err){
-       
-          console.error('Something went wrong',err.message);
-        }
-        else{
-          console.log('Artists Name: '+ JSON.stringify(data, null, 2));
-        }
-        });
-     }
+       spotifyApi.searchTracks(arg2)
+        .then(function(data){
+          console.log('Song Name:'+ arg2);
+          console.log('Artist Name:'+ JSON.stringify(data.body.tracks.items[0].artists[0].name,null,2));
+          console.log('Album Name:'+ JSON.stringify(data.body.tracks.items[0].album.name,null,2));
+          console.log('Preview Link:'+ JSON.stringify(data.body.tracks.items[0].preview_url,null,2));
+          console.log('Popularity Is:'+ JSON.stringify(data.body.tracks.items[0].popularity,null,2));
+          
+        }, function(err) {
+     console.error('Something is Wrong',err.message);
+   });
+     
+  }   
+  
   
 function getMyTweets(){
   var twitterCreds = key.twitterKeys;
