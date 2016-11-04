@@ -2,6 +2,7 @@
 var request = require('request');
 // Imported file keys.js and stored it in a variable.
 var key = require('./keys.js');
+var prettyjson = require('prettyjson');
 // set argument 2 in a variable
 var arg1 = process.argv[2];
 // set argument 3 in a variable
@@ -14,6 +15,13 @@ function omdbRequest(movieName){
   // console.log(queryUrl);
   // to use rquest npm package to get the query and response to the respective api.
   request(queryUrl,function(error,response,body){
+        // console.log(body)
+        var obj= JSON.parse(body)
+        console.log(prettyjson.render(obj, {
+          keysColor: 'rainbow',
+          dashColor: 'magenta',
+          stringColor: 'red'
+        }));
     // console.log(movieName);
     // console.log(JSON.stringify(response, null, 2));
     // if movie name is not equal to null it console.logs the asked movie info.
@@ -38,7 +46,8 @@ function omdbRequest(movieName){
   });
 }
 // Using switch to switch our case scenarios from one to another.
-switch(arg1){
+ function liriBot(arg1, arg2){
+  switch(arg1){
   case "movie-this":
     omdbRequest(arg2);
     break;
@@ -52,7 +61,10 @@ switch(arg1){
   case "do-what-it-says":
     doIt();
     break;
-} 
+  } 
+ }
+// inital invokation of liribot
+liriBot(arg1, arg2);
 // calling a function  which captures and reads file random.txt to current file
 // and returns the text of that file in the terminal.
 function doIt(){
@@ -66,6 +78,12 @@ var fs = require('fs');
     for (var i=0; i<output.length; i++){
     // Print each element (item) of the array/ 
      console.log(output[i]);
+     //replace any linbreaks or whitespace and reassign arg1
+     arg1 = output[0].replace(/(\r\n|\n|\r)/gm,"").trim();
+    // //replace any linbreaks or whitespace and reassign arg2
+     arg2 = output[1].replace(/(\r\n|\n|\r)/gm,"").trim();
+     // invoke liri bot with function from text
+     liriBot(arg1, arg2);
     }
   });
 }
@@ -114,4 +132,3 @@ function getMyTweets(){
     }
   });
 }
-

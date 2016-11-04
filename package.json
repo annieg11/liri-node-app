@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/annieg11/liri-node-app#readme",
   "dependencies": {
+    "prettyjson": "^1.1.3",
     "request": "^2.75.0",
     "spotify": "^0.3.0",
     "spotify-web-api-node": "^2.3.5",
