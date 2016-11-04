@@ -16,4 +16,8 @@ PACKAGE.JSON STORES THE DEPENDENCIES OF ALL THE PACKAGES INSTALLED ALONG WITH TH
 CHALLENGES FACED: TO UNDERSTAND HOW TO MANIPULATE THE LIBRARY OF THE NPM PACKAGES INSTALLED TO CODE THE APP.
 TO UNDERSTAND HOW NODE WORKS IN THE TERMINAL.
 
-
+Working of App :
+We pass the arguments in following manner in our terminal to see the working of our app
+node liri.js movie-this "jaws"
+where:
+node is arg[0],liri.js is argument[1], movie-this is arg[2], and "jaws" is arg[3]
