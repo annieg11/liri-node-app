@@ -1,6 +1,9 @@
 {
   "name": "liri-node-app",
   "version": "1.0.0",
+  "engines" : {
+    "node":"6.11.1"
+  },
   "description": "Node Application using Spotify, twitter,Request API's!!",
   "main": "keys.js",
   "scripts": {
